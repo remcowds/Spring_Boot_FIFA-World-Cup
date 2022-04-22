@@ -24,8 +24,7 @@ public class VoetbalServiceImpl implements VoetbalService {
 
 	public VoetbalServiceImpl() {
 		// zonder databank
-		stadiumList = new ArrayList<>(Arrays
-				.asList(new String[] { "Al Bayt Stadium", "Al Thumama Stadium"}));
+		stadiumList = new ArrayList<>(Arrays.asList(new String[] { "Al Bayt Stadium", "Al Thumama Stadium" }));
 
 		mapWedstrijdById.put("1",
 				new WedstrijdTicket(new Wedstrijd("1", new String[] { "België", "Canada" }, 26, 21), 35));
@@ -68,28 +67,18 @@ public class VoetbalServiceImpl implements VoetbalService {
 	public WedstrijdTicket getWedstrijd(String id) {
 		return mapWedstrijdById.get(id);
 	}
-	
-	//get stadium van een wedstrijd id
+
+	// get stadium van een wedstrijd id
 	public String getStadiumFromWedstrijd(String id) {
-		//TODO aanpassen
-		String stadium = getStadiumList().stream().filter(
-                stad -> {
-                	System.out.println("stad: " + stad);
-                    return getWedstrijdenByStadium(stad).contains(getWedstrijd(id));
-                }
-                ).collect(Collectors.toList()).get(0);
-        return stadium;
-        
-//		for (Entry<String, List<WedstrijdTicket>> entry : mapWedstrijdenByStadium.entrySet()) {
-//			String keyy = entry;
-//			List<String> ids = key.getWedstrijd().getId()
-//			
-//			entry.getValue().forEach(el -> System.out.println(el.getWedstrijd().getId()));
-//		}
-//		return "";
+		for (String stadion : stadiumList) {
+			for (WedstrijdTicket ticket : mapWedstrijdenByStadium.get(stadion)) {
+				if (ticket.getWedstrijd().getId().equals(id)) {
+					return stadion;
+				}
+			}
+		}
+		return "NOT FOUND";
 	}
-	
-	
 
 	public int ticketsBestellen(String id, int teBestellen) {
 		WedstrijdTicket wedstrijdTicket = mapWedstrijdById.get(id);
