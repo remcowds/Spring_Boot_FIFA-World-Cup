@@ -21,7 +21,7 @@
 	<!-- action nog aanpassen ig? -->
 	<form:form method="POST" action="" modelAttribute="aankoop" >
 		<div class="divken">
-			<label>email:</label> <form:input path="email" /> <form:errors path="email" cssClass="error"/>
+			<label>email:</label> <form:input path="email"  /> <form:errors path="email" cssClass="error"/>
 		</div>
 		
 		<div class="divken">

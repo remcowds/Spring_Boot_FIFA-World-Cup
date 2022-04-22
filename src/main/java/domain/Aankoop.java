@@ -1,21 +1,32 @@
 package domain;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 import validator.ValidEmail;
 
 public class Aankoop {
-	@NotEmpty
+	@NotEmpty(message = "moet ingevuld zijn")
 	@ValidEmail
 	private String email;
-	private int aantalTickets = 1;
-	private int voetbalcode1 = 10;
+
+	@NotEmpty(message = "moet ingevuld zijn")
+	@Min(value = 1, message="aantal tickets moet groter zijn of gelijk aan 1")
+	@Max(value = 25, message="aantal tickets moet kleiner zijn of gelijk aan 25")
+	private String aantalTickets = "1";
+
+	@NotEmpty(message = "moet ingevuld zijn")
 	
-	private int voetbalcode2 = 20;
-	
-	public Aankoop() {}
-	
-	public Aankoop(String email, int aantalTickets, int voetbalcode1, int voetbalcode2) {
+	private String voetbalcode1 = "10";
+
+	@NotEmpty(message = "moet ingevuld zijn")
+	private String voetbalcode2 = "20";
+
+	public Aankoop() {
+	}
+
+	public Aankoop(String email, String aantalTickets, String voetbalcode1, String voetbalcode2) {
 		super();
 		this.email = email;
 		this.aantalTickets = aantalTickets;
@@ -31,30 +42,28 @@ public class Aankoop {
 		this.email = email;
 	}
 
-	public int getAantalTickets() {
+	public String getAantalTickets() {
 		return aantalTickets;
 	}
 
-	public void setAantalTickets(int aantalTickets) {
+	public void setAantalTickets(String aantalTickets) {
 		this.aantalTickets = aantalTickets;
 	}
 
-	public int getVoetbalcode1() {
+	public String getVoetbalcode1() {
 		return voetbalcode1;
 	}
 
-	public void setVoetbalcode1(int voetbalcode1) {
+	public void setVoetbalcode1(String voetbalcode1) {
 		this.voetbalcode1 = voetbalcode1;
 	}
 
-	public int getVoetbalcode2() {
+	public String getVoetbalcode2() {
 		return voetbalcode2;
 	}
 
-	public void setVoetbalcode2(int voetbalcode2) {
+	public void setVoetbalcode2(String voetbalcode2) {
 		this.voetbalcode2 = voetbalcode2;
 	}
-	
-	
-	
+
 }

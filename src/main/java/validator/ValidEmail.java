@@ -17,7 +17,7 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 public @interface ValidEmail {
 
-    String message() default "you must include a valid email";
+    String message() default "geen geldig email";
     Class<?>[] groups() default{};
     Class<? extends Payload>[] payload() default {};
 }
