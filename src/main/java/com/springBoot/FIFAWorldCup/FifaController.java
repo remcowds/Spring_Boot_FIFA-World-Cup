@@ -26,16 +26,24 @@ public class FifaController {
 
 	@Autowired
 	private VoetbalServiceImpl voetbalServiceImpl;
-	
+
 	@Autowired
 	private AankoopValidation aankoopValidation;
 
 	// get algemeen
 	@GetMapping
-	public String showFormPage(Model model) {
+	public String showFormPage(Model model, @RequestParam(required = false) Integer verkocht,
+			@RequestParam(required = false) boolean uitverkocht) {
 		List<String> stadiums = voetbalServiceImpl.getStadiumList();
 
 		model.addAttribute("stadiums", stadiums);
+
+		if (verkocht == null) {
+			verkocht = 0;
+		}
+		model.addAttribute("verkocht", verkocht);
+
+		model.addAttribute("uitverkocht", uitverkocht);
 
 		return "kiesStadium";
 	}
@@ -59,31 +67,41 @@ public class FifaController {
 		model.addAttribute("land1", voetbalServiceImpl.getWedstrijd(id).getWedstrijd().getLanden()[0]);
 		model.addAttribute("land2", voetbalServiceImpl.getWedstrijd(id).getWedstrijd().getLanden()[1]);
 		model.addAttribute("dag", voetbalServiceImpl.getWedstrijd(id).getWedstrijd().getDag());
-		
+
 		model.addAttribute("aankoop", new Aankoop());
-		
+
 		return "detailMatch";
 	}
-	
+
 	@PostMapping("/{id}")
-	public String processBuyTicket(@PathVariable(value = "id") String id, @Valid Aankoop aankoop, BindingResult result, Model model) {		
-		
+	public String processBuyTicket(@PathVariable(value = "id") String id, @Valid Aankoop aankoop, BindingResult result,
+			Model model) {
+
 		aankoopValidation.validate(aankoop, result);
-		
-		if(result.hasErrors()) {
+
+		String stadion = voetbalServiceImpl.getStadiumFromWedstrijd(id);
+
+		if (result.hasErrors()) {
 			System.out.println("ni gelukt");
-			
+
 			model.addAttribute("aantalTickets", voetbalServiceImpl.getWedstrijd(id).getTickets());
-			model.addAttribute("stadium", voetbalServiceImpl.getStadiumFromWedstrijd(id));
+			model.addAttribute("stadium", stadion);
 			model.addAttribute("land1", voetbalServiceImpl.getWedstrijd(id).getWedstrijd().getLanden()[0]);
 			model.addAttribute("land2", voetbalServiceImpl.getWedstrijd(id).getWedstrijd().getLanden()[1]);
 			model.addAttribute("dag", voetbalServiceImpl.getWedstrijd(id).getWedstrijd().getDag());
-						
+
 			return "detailMatch";
 		}
-		
+
+		int aantalTeBestellen = Integer.parseInt(aankoop.getAantalTickets());
+
 		System.out.println("yeet gelukt");
-		return "test";
+
+		// effectief 'kopen'
+		int gekocht = voetbalServiceImpl.ticketsBestellen(id, aantalTeBestellen);
+
+		// redirecten
+		return String.format("redirect:/fifa?verkocht=%d", gekocht);
 	}
 
 }

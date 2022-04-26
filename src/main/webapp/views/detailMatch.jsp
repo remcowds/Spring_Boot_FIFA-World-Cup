@@ -12,7 +12,7 @@
         <link rel="STYLESHEET" href="${urlCss}" type="text/css" /> 
 <title>Ticket kopen</title>
 </head>
-<body>
+<body>	
 	<h1>Fifa World Cup Qatar 2022</h1>
 	<h2>Stadion: ${stadium}</h2>
 	<h3>${land1} vs ${land2} op ${dag}-11 </h3>

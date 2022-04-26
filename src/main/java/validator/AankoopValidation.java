@@ -31,9 +31,11 @@ public class AankoopValidation implements Validator {
 		}
 
 		// code1 < code2
-		if (Integer.parseInt(aankoop.getVoetbalcode1()) >= Integer.parseInt(aankoop.getVoetbalcode2())) {
-			errors.rejectValue("voetbalcode1", "code1.kleiner.dan.code2",
-					"voetbalcode1 moet kleiner zijn dan voetbalcode2");
+		if (isNumeric(aankoop.getVoetbalcode1()) && isNumeric(aankoop.getVoetbalcode2())) {
+			if (Integer.parseInt(aankoop.getVoetbalcode1()) >= Integer.parseInt(aankoop.getVoetbalcode2())) {
+				errors.rejectValue("voetbalcode1", "code1.kleiner.dan.code2",
+						"voetbalcode1 moet kleiner zijn dan voetbalcode2");
+			}
 		}
 
 	}

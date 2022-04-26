@@ -7,20 +7,19 @@ import javax.validation.constraints.NotEmpty;
 import validator.ValidEmail;
 
 public class Aankoop {
-	@NotEmpty(message = "moet ingevuld zijn")
+	@NotEmpty
 	@ValidEmail
 	private String email;
 
-	@NotEmpty(message = "moet ingevuld zijn")
-	@Min(value = 1, message="aantal tickets moet groter zijn of gelijk aan 1")
-	@Max(value = 25, message="aantal tickets moet kleiner zijn of gelijk aan 25")
+	@NotEmpty
+	@Min(value = 1, message = "{aantal.tickets.groter.gelijk.1}")
+	@Max(value = 25, message = "{aantal.tickets.kleiner.25}")
 	private String aantalTickets = "1";
 
-	@NotEmpty(message = "moet ingevuld zijn")
-	
+	@NotEmpty
 	private String voetbalcode1 = "10";
 
-	@NotEmpty(message = "moet ingevuld zijn")
+	@NotEmpty
 	private String voetbalcode2 = "20";
 
 	public Aankoop() {

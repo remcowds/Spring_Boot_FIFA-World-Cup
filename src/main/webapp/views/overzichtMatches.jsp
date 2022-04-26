@@ -28,7 +28,17 @@
 		
 		<c:forEach var="wedstrijd" items="${wedstrijden}">
 				<tr>
-					<td><a href="/fifa/${wedstrijd.getWedstrijd().getId()}">${wedstrijd.getWedstrijd().getId()}</a></td>
+					<td>
+						<c:choose>
+							<c:when test="${wedstrijd.getTickets() == 0}">
+								<!-- mag nie -->
+								<a href="/fifa?uitverkocht=true">${wedstrijd.getWedstrijd().getId()}</a>
+							</c:when>
+							<c:otherwise>
+								<a href="/fifa/${wedstrijd.getWedstrijd().getId()}">${wedstrijd.getWedstrijd().getId()}</a>
+							</c:otherwise>
+						</c:choose> 
+					</td>
 					<td>${wedstrijd.getWedstrijd().getLanden()[0]} - ${wedstrijd.getWedstrijd().getLanden()[1]}</td>
 					<td>${wedstrijd.getWedstrijd().getDag()} november</td>
 					<td>${wedstrijd.getWedstrijd().getUur()}</td>				
