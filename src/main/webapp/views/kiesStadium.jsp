@@ -46,5 +46,10 @@
 		<input type="submit" value="Voer uit" />
 
 	</form:form>
+
+	<form:form action='logout' method='POST'>
+		<input type="submit" value="Log out" />
+	</form:form>
+
 </body>
 </html>
