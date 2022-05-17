@@ -37,7 +37,7 @@ public class FifaController {
 
 	// get algemeen
 	@GetMapping
-	public String showFormPage(Model model, @RequestParam(required = false) Integer verkocht,
+	public String homePage(Model model, @RequestParam(required = false) Integer verkocht,
 			@RequestParam(required = false) boolean uitverkocht/*, Principal principal*/) {
 //		System.out.println("current user: " + principal.getName());
 		
@@ -74,7 +74,7 @@ public class FifaController {
 	}
 
 	@PostMapping
-	public String onSubmit(@RequestParam("stadium") String stadium, Model model) {
+	public String kiesStadion(@RequestParam("stadium") String stadium, Model model) {
 		model.addAttribute("stadium", stadium);
 
 		model.addAttribute("wedstrijden", voetbalMatchDao.getMatchByStadion(stadium));
