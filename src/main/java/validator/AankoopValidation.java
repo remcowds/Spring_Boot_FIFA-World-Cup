@@ -17,7 +17,11 @@ public class AankoopValidation implements Validator {
 		// not null/empty wordt gedaan bij binding adhv annotation
 		// email wordt ook gedaan adhv annotation
 		// aantaltickets moet tussen 1 en 25 liggen --> annotation
-
+		
+		//alle errors loggen
+//		errors.getAllErrors().forEach(el -> System.out.println(el));
+		
+		
 		Aankoop aankoop = (Aankoop) target;
 
 		// deze 3 properties moeten getallen zijn
@@ -25,19 +29,24 @@ public class AankoopValidation implements Validator {
 				{ "voetbalcode1", aankoop.getVoetbalcode1() }, { "voetbalcode2", aankoop.getVoetbalcode2() } };
 
 		for (String[] pair : properties) {
+			if (errors.getFieldError(pair[0]) != null) {
+				// als er al errors zijn, moet er hiervoor nimr gecheckt worden, cuz er is al
+				// een error
+				continue;
+			}
 			if (!isNumeric(pair[1])) {
 				errors.rejectValue(pair[0], "must.be.numeric", "moet uit getallen bestaan");
 			}
 		}
 
 		// code1 < code2
+		// ma ni nodig als er al errors zijn
 		if (isNumeric(aankoop.getVoetbalcode1()) && isNumeric(aankoop.getVoetbalcode2())) {
 			if (Integer.parseInt(aankoop.getVoetbalcode1()) >= Integer.parseInt(aankoop.getVoetbalcode2())) {
 				errors.rejectValue("voetbalcode1", "code1.kleiner.dan.code2",
 						"voetbalcode1 moet kleiner zijn dan voetbalcode2");
 			}
 		}
-
 	}
 
 	public boolean isNumeric(String invoer) {
