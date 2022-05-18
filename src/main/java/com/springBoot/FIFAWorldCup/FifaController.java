@@ -137,6 +137,10 @@ public class FifaController {
 
 		// redirecten
 		return String.format("redirect:/fifa?verkocht=%d", gekocht);
+		
+		//ipv met die params, kunde ook session attributes doen
+		
+		
 	}
 
 }

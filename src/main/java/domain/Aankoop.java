@@ -11,9 +11,11 @@ public class Aankoop {
 	@ValidEmail
 	private String email;
 
+	//MOET IK NOG MET DIE VALUE DOEN, IPV HARDCODED 1 EN 25
+	
 	@NotEmpty
-	@Min(value = 1, message = "{aantal.tickets.groter.gelijk.1}")
-	@Max(value = 25, message = "{aantal.tickets.kleiner.25}")
+	@Min(value = 1, message = "{aantal.tickets.groter.gelijk}")
+	@Max(value = 25, message = "{aantal.tickets.kleiner}")
 	private String aantalTickets = "1";
 
 	@NotEmpty
