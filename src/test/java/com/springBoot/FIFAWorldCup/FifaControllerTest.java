@@ -80,7 +80,7 @@ public class FifaControllerTest {
 		// injectie
 		ReflectionTestUtils.setField(controller, "voetbalMatchDao", voetbalMatchDaoMock);
 
-		mockMvc.perform(get("/fifa").param("verkocht", "1")).andExpect(status().isOk())
+		mockMvc.perform(get("/fifa").sessionAttr("verkocht", 1)).andExpect(status().isOk())
 				.andExpect(view().name("kiesStadium")).andExpect(model().attributeExists("stadiums"))
 				.andExpect(model().attribute("uitverkocht", false)).andExpect(model().attribute("verkocht", 1));
 	}
@@ -93,8 +93,8 @@ public class FifaControllerTest {
 
 		// injectie
 		ReflectionTestUtils.setField(controller, "voetbalMatchDao", voetbalMatchDaoMock);
-
-		mockMvc.perform(get("/fifa").param("uitverkocht", "true")).andExpect(status().isOk())
+		
+		mockMvc.perform(get("/fifa").sessionAttr("uitverkocht", true)).andExpect(status().isOk())
 				.andExpect(view().name("kiesStadium")).andExpect(model().attributeExists("stadiums"))
 				.andExpect(model().attribute("uitverkocht", true)).andExpect(model().attribute("verkocht", 0));
 	}
@@ -127,7 +127,7 @@ public class FifaControllerTest {
 		ReflectionTestUtils.setField(controller, "voetbalMatchDao", voetbalMatchDaoMock);
 
 		// moet dus mocken da match me id = 1 uitverkocht is
-		mockMvc.perform(get("/fifa/1")).andExpect(redirectedUrl("/fifa?uitverkocht=true"));
+		mockMvc.perform(get("/fifa/1")).andExpect(redirectedUrl("/fifa?uitverkocht=true&verkocht=0"));
 	}
 
 	@Test
@@ -165,7 +165,7 @@ public class FifaControllerTest {
 		ReflectionTestUtils.setField(controller, "aankoopValidation", aankoopValidationMock);
 
 		mockMvc.perform(post("/fifa/1").flashAttr("aankoop", new Aankoop("remco@email.com", "1", "10", "20")))
-				.andExpect(redirectedUrl("/fifa?verkocht=1"));
+				.andExpect(redirectedUrl("/fifa?verkocht=1&uitverkocht=false"));
 	}
 
 	@Test
